@@ -1,3 +1,4 @@
+import { router } from "./router/router";
 
-
-document.getElementById("app").innerHTML="<p>Hello world</p>"
+window.addEventListener("hashchange",router)
+window.addEventListener("load",router)
