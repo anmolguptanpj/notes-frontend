@@ -5,36 +5,68 @@ export default function Notes(): HTMLElement{
 
     container.innerHTML = template
 
-    let todos=[];
+    const noteForm = container.querySelector("#notes")
 
-    function saveTodos(value : string){
-        todos.push(value)
+    const storageKey:string = "notesappbyanm"
+
+    
+
+    noteForm.addEventListener("submit",(e)=>{
+        e.preventDefault();
+
+        const formData = {
+            id: crypto.randomUUID(),
+            title:container.querySelector("#title").value,
+            text:container.querySelector("#text").value,
+            createdAt:new Date().toISOString()
+        }
+
+        const existingNotes = JSON.parse(localStorage.getItem(storageKey)) || []
+
+
+       
+        existingNotes.push(formData)
+
+        localStorage.setItem(storageKey,JSON.stringify(existingNotes))
+        container.querySelector('#title').value=""
+        container.querySelector('#text').value=""
+        renderNotes()
+
+
+    });
+
+    function renderNotes(){
+        const content = container.querySelector("#content")
+        content.innerHTML=""
+        
+        const raw = localStorage.getItem(storageKey)
+        const notes = raw ? JSON.parse(raw) : []
+        
+       
+        notes.forEach(note=>{
+            const texts = document.createElement("article");
+            texts.innerHTML=`
+           <div class=" r p-5 border-2 border-gray-400 rounded-xl shadow-xl m-2"> <h3 class="text-xl font-bold underline">${note.title}</h3>
+            <p>${note.text}</p>
+            <small>${new Date(note.createdAt).toLocaleString()}</small></div>`;
+            content.appendChild(texts)
+
+            
+             texts.addEventListener("click",()=>{alert("You clicked on notes")})
+
+        })
+
+       
     }
 
- function renderTodos(){
-    const todo = container.querySelector("#content")
-    todo.innerHTML = ""; 
-   
-    todos.forEach((item)=>{
-         const div = document.createElement("div")
-         div.innerHTML=item
-         todo.appendChild(div)
-         console.log(todos)
-         div.className="px-3 rounded-xl py-2 border-2 border-transparent shadow-xl"
-    })
 
-    
- }
 
-    const input = container.querySelector<HTMLInputElement>("#input")
-    const button = container.querySelector<HTMLButtonElement>("#save")
-    
-    button.addEventListener("click",()=>{
-        saveTodos(input.value)
-        renderTodos()
-        input.value=""
-    })
-   
+    renderNotes()
+    console.log(localStorage)
+
+
+
+
 
 
 
