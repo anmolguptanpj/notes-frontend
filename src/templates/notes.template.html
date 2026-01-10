@@ -21,17 +21,19 @@
             </div>
         </div>
     </header>
-   <main>
+   <main class="flex-1 w-full">
     <div class="flex-1 flex flex-col items-center  w-full">
-        <form id="notes" class="flex flex-row  h-45  w-200 border-gray-400   border-2 rounded-xl shadow-2xl m-20">
+       <div class="notesContainer">
+         <form id="notes" class="flex flex-row  h-45  w-200 border-gray-400   border-2 rounded-xl shadow-2xl m-20">
            <div class="my-3 mx-3 flex flex-col gap-6 w-full p-2">
             <input id="title" class="text-2xl font-bold w-full  focus:outline-none" placeholder="Title"/>
-            <input id="text" class="text-xl w-full  focus:outline-none" required placeholder="Take a note"/>
+            <input id="text" class="text-xl w-full  focus:outline-none"  placeholder="Take a note"/>
             <div class="w-full flex justify-end ">
                 <button class="w-20  text-center font-bold hover:bg-gray-100  " type="submit">Add</button>
             </div>
            </div>
         </form>
+       </div>
 
         <section class="flex w-full px-10 gap-4 " id="content">
 
